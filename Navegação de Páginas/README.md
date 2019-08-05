@@ -1,4 +1,4 @@
 # navigation_app
 
-Simples projeto em flutter de navegação de páginas
+Simples projeto em Flutter de navegação de páginas
 
