@@ -50,7 +50,7 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
 
             
             tabs: <Tab>[
-              new Tab(text: "Home"),
+              new Tab(text: "Principal"),
               new Tab(text: "Pizza"),
               new Tab(text: "Lanches"),
             ]),
