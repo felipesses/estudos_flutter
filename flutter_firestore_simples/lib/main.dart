@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         
 
       ),
-      home: MyHomePage(title: 'Flutter post'),
+      home: MyHomePage(title: 'Flutter Post'),
       
     );
   }
