@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
             children: <Widget>[
               new IconButton(
                 icon: new Icon(Icons.favorite, color: Colors.red),
-                iconSize: 70.0,
+                iconSize: 71.0,
                 onPressed: () {
                   Navigator.of(context).pushNamed("/SecondPage"); // push para a segunda pagina
                 },
