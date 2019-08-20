@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Cálculo de IMC'),
+      home: MyHomePage(title: 'Calculo de IMC'),
     );
   }
 }
