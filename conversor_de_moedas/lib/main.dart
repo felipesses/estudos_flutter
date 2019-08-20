@@ -142,7 +142,7 @@ class _MyAppState extends State<MyApp> {
             ),
 
           SizedBox(height: 10),
-            Text("1 USD = 4.3 BRL as of Aug 15, 2019",
+            Text("1 USD = 4.3 BRL as of Aug 16, 2019",
             style: TextStyle(color: Colors.white, fontSize: 15),
             textAlign: TextAlign.center,
             ),
