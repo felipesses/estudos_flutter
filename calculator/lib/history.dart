@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 class History extends StatelessWidget {
   @override
@@ -9,11 +10,10 @@ class History extends StatelessWidget {
 
       ),
       body: new Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("History")
-          ],
+        
+        child: ListView(
+          padding: EdgeInsets.all(8.0),
+          children: historyList.map((data) => Text(data)).toList(),
         ),
       ),
 

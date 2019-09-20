@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'constants.dart';
-import 'history.dart';
 import 'blocs/themes.dart';
 import 'package:provider/provider.dart';
+import 'history.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,7 +28,7 @@ class MaterialAppWithTheme extends StatelessWidget {
     title: 'Calculator',
     theme: theme.getTheme(),
     debugShowCheckedModeBanner: false,
-    home: MyHomePage(),
+    home: HomePage(),
       routes: <String, WidgetBuilder> {
     "/History" : (BuildContext context) => new History()
       },
@@ -37,84 +37,160 @@ class MaterialAppWithTheme extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+
+  final input = TextEditingController();
+  final List<String> historyList = <String>[];
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
 
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
- class _MyHomePageState extends State<MyHomePage> {
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Calculator"),
+        actions: <Widget>[
+          Container(
+                alignment: Alignment.topRight,
+                child: PopupMenuButton<String>(
+                onSelected: chooseAction,
+                itemBuilder: (BuildContext context){
+                  return Constants.choices.map((String choices){
+                    return PopupMenuItem<String>(
+                      value: choices,
+                      child: Text(choices),
+                    
+                    );
+                  }).toList();
+                },
+
+             
+                ),
+
+                
+              ),         
+        ],
+
+      ),
 
 
-  String output = "0";
-  int selectedRadio = 0;
-  String _output = "0";
-  double num1 = 0;
-  double num2 = 0;
-  String operand = "";
+      body: Center(
+        child: Column(
+          children: <Widget>[
+              
+            Container(
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.symmetric(
+                vertical: 24.0,
+                horizontal: 12.0
+              ),
+              child: TextField(
+                decoration: InputDecoration.collapsed(
+                  hasFloatingPlaceholder: true,
+                  hintText: "0",
+                  hintStyle: TextStyle(
+                    fontSize: 60,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
 
- 
-  buttonPressed(String buttonText){
+                  ),
+                  
+                ),
+                style: TextStyle(fontSize: 60),
+                textAlign: TextAlign.right,
+                controller: input,
+                
 
-    if(buttonText == "AC"){
+              ),
+              ),
 
-    _output = "0";
-    num1 = 0;
-    num2 = 0;
-    operand = "";
 
-    } else if(buttonText == "+" || buttonText == "-" || buttonText == "/" || buttonText == "x"){
+            new Expanded(
+              child: new Divider(),
+            ),
+            Column(
+                
+                children: <Widget>[ 
+                new Row(
+                
+                children: <Widget>[
+                
+                buildButton("7"),
+                buildButton("8"),
+                buildButton("9"),
+                delete()
 
-      num1 = double.parse(output);
-      operand = buttonText;
-      _output = "0";
+               
+              ],),
 
-    }else if(buttonText == "."){
+               new Row(
+                children: <Widget>[
+                buildButton("4"),
+                buildButton("5"),
+                buildButton("6"),
+                buildButton("/")
+               
+              ],),
 
-      if(_output.contains(".")){
-        return;
+               new Row(
+                children: <Widget>[
+                buildButton("1"),
+                buildButton("2"),
+                buildButton("3"),
+                buildButton("*")
 
-      } else {
-        _output = _output + buttonText;
-      }
 
-    } else if(buttonText == "="){
-      num2 = double.parse(output);
-      if(operand == "+"){
-        _output = (num1+num2).toString();
-      }
-      if(operand == "-"){
-        _output = (num1-num2).toString();
-      }
-      if(operand == "/"){
-        _output = (num1/num2).toString();
-      }
-      if(operand == "x"){
-        _output = (num1*num2).toString();
-      }
-      num1 = 0;
-      num2 = 0;
-      operand = "";
-    } else {
-      _output = _output + buttonText;
-    }
+               
+              ],),
 
-    setState(() {
-      output = double.parse(_output).toStringAsFixed(2);
-    });
+               new Row(
+                children: <Widget>[
+                buildButton("0"),
+                buildButton("."),
+                operation("="),
+                buildButton("-")
 
+               
+              ],),
+
+               new Row(
+                children: <Widget>[
+                clean("AC"),
+                buildButton("+")
+            
+           
+
+               
+              ],),
+            ])
+         
+  
+          ],
+        ),
+      ),
+    );
   }
 
+
+
+  
   chooseAction(String choices){
     if(choices == Constants.history){
-      Navigator.of(context).pushNamed("/History");
+     Navigator.of(context).pushNamed("/History");
     }
     if(choices == Constants.chooseTheme){
       createDialogAlert(context);
 
     }
 }
-  createDialogAlert(BuildContext context){
+
+
+   createDialogAlert(BuildContext context){
    showDialog<void>(
   context: context,
   builder: (BuildContext context) {
@@ -142,8 +218,7 @@ class MyHomePage extends StatefulWidget {
                 onChanged: (int value) {
                   setState(() => selectedRadio = value);
                 },
-                
-                
+
               );
   
             },
@@ -161,6 +236,7 @@ class MyHomePage extends StatefulWidget {
         ),
         FlatButton(
           child: Text("OK"),
+          
           onPressed: () {
             if(selectedRadio == 0){
               ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
@@ -172,6 +248,7 @@ class MyHomePage extends StatefulWidget {
               _themeChanger.setTheme(ThemeData.dark());
               Navigator.of(context).pop();
             }
+            
           }
             
         )
@@ -180,131 +257,115 @@ class MyHomePage extends StatefulWidget {
   },
    );
   }
-  Widget buildButton(String buttonText){
-     return new Expanded(
-          child: OutlineButton(
-          padding: EdgeInsets.all(24.0),
-          child: new Text(buttonText,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold
-          ),
-          ),
-          onPressed: (){
 
-            buttonPressed(buttonText);
+  Widget buildButton(String text){
 
-          },
-          ),
-        );
-  }
- 
-  @override
-  Widget build(BuildContext context) {
-    
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Calculator"),
-        actions: <Widget>[
-          Container(
-                alignment: Alignment.topRight,
-                child: PopupMenuButton<String>(
-                onSelected: chooseAction,
-                itemBuilder: (BuildContext context){
-                  return Constants.choices.map((String choices){
-                    return PopupMenuItem<String>(
-                      value: choices,
-                      child: Text(choices),
-                    
-                    );
-                  }).toList();
-                },
-
-             
-                ),
-              ),
-        ],
-        
-      ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
+    return Expanded(
+      child: OutlineButton(
+          padding: EdgeInsets.all(18.0),
+          borderSide: BorderSide(color: Colors.white),
+          color: Colors.white,
+          child: Text(text, style: TextStyle(fontSize: 28.0)),
+          onPressed: () {
+            
+            setState(() {
+              input.text = input.text + text;
               
-            Container(
-              alignment: Alignment.centerRight,
-              padding: EdgeInsets.symmetric(
-                vertical: 24.0,
-                horizontal: 12.0
-              ),
-              child: new Text(output, style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold)
-              ),
-              ),
-         
-
-            new Expanded(
-              child: new Divider(),
-            ),
-            Column(
-                
-                children: <Widget>[ 
-                new Row(
-                
-                children: <Widget>[
-                
-                buildButton("7"),
-                buildButton("8"),
-                buildButton("9"),
-                buildButton("/")
-
-               
-              ],),
-
-               new Row(
-                children: <Widget>[
-                buildButton("4"),
-                buildButton("5"),
-                buildButton("6"),
-                buildButton("x")
-
-
-               
-              ],),
-
-               new Row(
-                children: <Widget>[
-                buildButton("1"),
-                buildButton("2"),
-                buildButton("3"),
-                buildButton("-")
-
-
-               
-              ],),
-
-               new Row(
-                children: <Widget>[
-                buildButton("."),
-                buildButton("0"),
-                buildButton("00"),
-                buildButton("+")
-
-               
-              ],),
-
-               new Row(
-                children: <Widget>[
-                buildButton("AC"),
-                buildButton("="),
-           
-
-               
-              ],),
-            ])
-        
-           
-          ],
-        ),
+            });
+          
+          }
       ),
+          
     );
+
+
   }
-}
+
+    Widget clean(String text){
+
+     return Expanded(
+      child: OutlineButton(
+        padding: EdgeInsets.all(18.0),
+        borderSide: BorderSide(color: Colors.white),
+        child: Text(text, style: TextStyle(fontSize: 28.0)),
+        
+        onPressed: () {
+          setState(() {
+            input.text = "";
+          });
+        }
+      )
+      );
+
+    }
+
+    Widget operation(String text){
+
+      return Expanded(
+      child: OutlineButton(
+        padding: EdgeInsets.all(18.0),
+        borderSide: BorderSide(color: Colors.white),
+        child: Text(text, style: TextStyle(fontSize: 28.0)),
+        onPressed: () {
+          setState(() {
+            Parser p = new Parser();
+            Expression exp = p.parse(input.text);
+            ContextModel cm = new ContextModel();
+            input.text = exp.evaluate(EvaluationType.REAL, cm).toString();
+            historyList.add(exp.toString()+" = " +exp.evaluate(EvaluationType.REAL, cm).toString());
+
+          });
+        }
+      ),
+      );
+        }
+
+        Widget delete(){
+
+        return Expanded(
+        child: OutlineButton(
+        padding: EdgeInsets.all(18.0),
+        borderSide: BorderSide(color: Colors.white),
+        child: Icon(Icons.delete_forever, size: 35, color: Colors.blueGrey),
+        onPressed: () {
+          input.text = (input.text.length > 0)
+              ? (input.text.substring(0, input.text.length - 1))
+              : "";
+        },
+      ),
+        );
+
+        }
+
+        Widget multiply(String text){
+
+
+      return Expanded(
+      child: OutlineButton(
+        padding: EdgeInsets.all(18.0),
+        borderSide: BorderSide(color: Colors.white),
+        child: Text(text, style: TextStyle(fontSize: 28.0)),
+        onPressed: () {
+          setState(() {
+            Parser p = new Parser();
+            Expression exp = p.parse(input.text);
+            ContextModel cm = new ContextModel();
+            input.text = exp.evaluate(EvaluationType.REAL, cm).toString();
+            historyList.add(exp.toString()+" x " +exp.evaluate(EvaluationType.REAL, cm).toString());
+
+          });
+        }
+      ),
+      );
+
+
+        }
+
+    }
+
+
+
+ 
+
+
+  
