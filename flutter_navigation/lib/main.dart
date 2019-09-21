@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
 
-
-void main (){
-
-  runApp(new MaterialApp(
-
-    home: new HomePage(),
-    routes: <String, WidgetBuilder> {
-      "/SecondPage" : (BuildContext context) => new SecondPage()
-    }
-
-
-  ));
-
+void main() {
+  runApp(new MaterialApp(home: new HomePage(), routes: <String, WidgetBuilder>{
+    "/SecondPage": (BuildContext context) => new SecondPage()
+  }));
 }
-
-
 
 class HomePage extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title: new Text("Home"), backgroundColor: Colors.red,),
+      appBar: new AppBar(
+        title: new Text("Home"),
+        backgroundColor: Colors.red,
+      ),
       body: new Container(
         child: new Center(
           child: new Column(
@@ -31,7 +23,8 @@ class HomePage extends StatelessWidget {
                 icon: new Icon(Icons.favorite, color: Colors.red),
                 iconSize: 71.0,
                 onPressed: () {
-                  Navigator.of(context).pushNamed("/SecondPage"); // push para a segunda pagina
+                  Navigator.of(context)
+                      .pushNamed("/SecondPage"); // push para a segunda pagina
                 },
               ),
               new Text("Home")
@@ -43,17 +36,16 @@ class HomePage extends StatelessWidget {
   }
 }
 
-
-
-
 // SEGUNDA PAGINA
-
 
 class SecondPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title: new Text("Segunda Página"), backgroundColor: Colors.blue,),
+      appBar: new AppBar(
+        title: new Text("Segunda Página"),
+        backgroundColor: Colors.blue,
+      ),
       body: new Container(
         child: new Center(
           child: new Column(
@@ -62,7 +54,7 @@ class SecondPage extends StatelessWidget {
               new IconButton(
                 icon: new Icon(Icons.home, color: Colors.red),
                 iconSize: 70.0,
-                onPressed: (){
+                onPressed: () {
                   Navigator.of(context).pushNamed("/HomePage");
                 },
               ),
@@ -74,4 +66,3 @@ class SecondPage extends StatelessWidget {
     );
   }
 }
-

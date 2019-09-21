@@ -2,40 +2,20 @@ import 'package:flutter/material.dart';
 import 'auth.dart';
 
 class HomePage extends StatelessWidget {
-
-  HomePage({
-    this.auth,
-    this.onSignedOut
-  });
+  HomePage({this.auth, this.onSignedOut});
 
   final BaseAuth auth;
   final VoidCallback onSignedOut;
 
-
-
-
-
-  void _signOut() async{
-
+  void _signOut() async {
     try {
-
       await auth.signOut();
 
       onSignedOut();
-
-
-
-
-      
-
     } catch (e) {
       print("Error: $e");
     }
-
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -44,20 +24,19 @@ class HomePage extends StatelessWidget {
         title: new Text("Bem vindo"),
         actions: <Widget>[
           new FlatButton(
-            child: new Text("Logout", style: new TextStyle(fontSize: 17.0, color: Colors.white)),
-            onPressed: _signOut
-          )
+              child: new Text("Logout",
+                  style: new TextStyle(fontSize: 17.0, color: Colors.white)),
+              onPressed: _signOut)
         ],
-        
       ),
-
       body: new Container(
         child: new Center(
-          child: Text("Bem vindo!", style: new TextStyle(fontSize: 32.0),),
-
+          child: Text(
+            "Bem vindo!",
+            style: new TextStyle(fontSize: 32.0),
+          ),
         ),
       ),
-      
     );
   }
 }

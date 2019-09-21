@@ -7,17 +7,13 @@ class History extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("History"),
-
       ),
       body: new Center(
-        
         child: ListView(
           padding: EdgeInsets.all(8.0),
           children: historyList.map((data) => Text(data)).toList(),
         ),
       ),
-
-      
     );
   }
 }

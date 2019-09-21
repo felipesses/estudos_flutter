@@ -1,7 +1,6 @@
 import 'package:delivery_ui/model/foodItem.dart';
 
 class CartProvider {
-
   List<FoodItem> foodItems = [];
 
   List<FoodItem> addToList(FoodItem foodItem) {
@@ -9,23 +8,21 @@ class CartProvider {
 
     // Logica para aumentar a quantidade de um mesmo ID
 
-    if(foodItems.length > 0 ){
+    if (foodItems.length > 0) {
       for (var i = 0; i < foodItems.length; i++) {
-        if(foodItems[i].id == foodItem.id){
+        if (foodItems[i].id == foodItem.id) {
           increaseItemQuantity(foodItem);
           isPresent = true;
           break;
         } else {
           isPresent = false;
         }
-        
       }
 
-      if(!isPresent){
+      if (!isPresent) {
         foodItems.add(foodItem);
       }
-
-    }else {
+    } else {
       foodItems.add(foodItem);
     }
     return foodItems;
@@ -38,8 +35,4 @@ class CartProvider {
     foodItems.remove(foodItem);
     return foodItems;
   }
-
-
-
-
 }

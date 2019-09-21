@@ -46,23 +46,16 @@ class _TaskDialogState extends State<TaskDialog> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextFormField(
-
-              controller: _titleController,
-              decoration: InputDecoration(labelText: 'Título'),
-              autofocus: true,
- 
-              
-              ),
-                   
+            controller: _titleController,
+            decoration: InputDecoration(labelText: 'Título'),
+            autofocus: true,
+          ),
           TextFormField(
-          
-              controller: _descriptionController,
-              decoration: InputDecoration(labelText: 'Descrição'),
-              maxLengthEnforced: false,
-              maxLines: null,
-              
-              
-              ),
+            controller: _descriptionController,
+            decoration: InputDecoration(labelText: 'Descrição'),
+            maxLengthEnforced: false,
+            maxLines: null,
+          ),
         ],
       ),
       actions: <Widget>[

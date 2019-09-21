@@ -22,8 +22,6 @@ class TaskHelper {
     }
   }
 
-
-
   Future<Database> initDb() async {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, "todo_list.db");

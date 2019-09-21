@@ -48,15 +48,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onChanged: (text) {
                 a = double.parse("$text"); //  convertendo a String para double
               },
-
               decoration:
-                  InputDecoration(
-                    border: InputBorder.none, 
-                  hintText: '0.0'),
+                  InputDecoration(border: InputBorder.none, hintText: '0.0'),
             ),
-
             TextField(
-
               onChanged: (text) {
                 p = double.parse("$text");
               },
@@ -65,15 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 hintText: '0.0',
               ),
             ),
-
             new Text('Seu IMC é:'),
             Text(
               '$imc',
               style: Theme.of(context).textTheme.display1,
             ),
-
             new RaisedButton(
-
               color: Colors.blue,
               elevation: 4.0,
               splashColor: Colors.blueAccent,

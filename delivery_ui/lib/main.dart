@@ -16,19 +16,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      blocs: [
-
-        Bloc((i)=> CartListBloc())
-
-
-
-      ],
+      blocs: [Bloc((i) => CartListBloc())],
       child: MaterialApp(
         title: "Me Dispache",
         home: Home(),
         debugShowCheckedModeBanner: false,
       ),
-
     );
   }
 }
@@ -43,67 +36,54 @@ class Home extends StatelessWidget {
             children: <Widget>[
               FirstHalf(),
               SizedBox(height: 45),
-              for(var foodItem in foodItemList.foodItems)
-              ItemContainer(foodItem : foodItem)
+              for (var foodItem in foodItemList.foodItems)
+                ItemContainer(foodItem: foodItem)
             ],
-
           ),
         ),
-        ),
-      
+      ),
     );
   }
-
-
 }
 
 class ItemContainer extends StatelessWidget {
   final FoodItem foodItem;
-  ItemContainer({
-    @required this.foodItem
-  });
+  ItemContainer({@required this.foodItem});
 
   final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
 
-  addToCart(FoodItem foodItem){
-
+  addToCart(FoodItem foodItem) {
     bloc.addToList(foodItem);
-
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         addToCart(foodItem);
         final snackbar = SnackBar(
           content: Text("${foodItem.title} added to the cart"),
           duration: Duration(milliseconds: 550),
         );
         Scaffold.of(context).showSnackBar(snackbar);
-
       },
       child: Items(
-        hotel: foodItem.hotel,
-        itemName: foodItem.title,
-        itemPrice: foodItem.price,
-        imgUrl: foodItem.imgURL,
-        leftAligned: (foodItem.id % 2 == 0) ? true : false
-      ),
-      
+          hotel: foodItem.hotel,
+          itemName: foodItem.title,
+          itemPrice: foodItem.price,
+          imgUrl: foodItem.imgURL,
+          leftAligned: (foodItem.id % 2 == 0) ? true : false),
     );
   }
 }
 
 class Items extends StatelessWidget {
-
-  Items({
-    @required this.leftAligned,
-    @required this.hotel,
-    @required this.itemName,
-    @required this.imgUrl,
-    @required this.itemPrice
-    
-  });
+  Items(
+      {@required this.leftAligned,
+      @required this.hotel,
+      @required this.itemName,
+      @required this.imgUrl,
+      @required this.itemPrice});
 
   final bool leftAligned;
   final String imgUrl;
@@ -120,32 +100,26 @@ class Items extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(
-
-          left: leftAligned ? 0 : containerPadding,
-          right: leftAligned ? containerPadding : 0,
-
-        
+            left: leftAligned ? 0 : containerPadding,
+            right: leftAligned ? containerPadding : 0,
           ),
           child: Column(
             children: <Widget>[
               Container(
                 width: double.infinity,
                 height: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10)
-                ),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.horizontal(
-                    left: leftAligned ? Radius.circular(0) : Radius.circular(containerBorderRadius),
-                    right: leftAligned ? Radius.circular(containerBorderRadius) : Radius.circular(0)
-                  ),
-                  child: Image.network(
-                    imgUrl,
-                    fit: BoxFit.fill
-                  ),
+                      left: leftAligned
+                          ? Radius.circular(0)
+                          : Radius.circular(containerBorderRadius),
+                      right: leftAligned
+                          ? Radius.circular(containerBorderRadius)
+                          : Radius.circular(0)),
+                  child: Image.network(imgUrl, fit: BoxFit.fill),
                 ),
-
-
               ),
               SizedBox(
                 height: 40,
@@ -164,17 +138,13 @@ class Items extends StatelessWidget {
                           child: Text(
                             itemName,
                             style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18
-                            ),
+                                fontWeight: FontWeight.w700, fontSize: 18),
                           ),
-
                         ),
-                        Text("\$$itemPrice",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18
-                        ),
+                        Text(
+                          "\$$itemPrice",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 18),
                         ),
                       ],
                     ),
@@ -185,51 +155,36 @@ class Items extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: RichText(
                         text: TextSpan(
-                          style: TextStyle(
-                            color: Colors.black38,
-                            fontSize: 15
-                          ),
+                          style: TextStyle(color: Colors.black38, fontSize: 15),
                           children: [
-                            TextSpan (text: "by "),
+                            TextSpan(text: "by "),
                             TextSpan(
-                              text:  hotel,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700
-                              ),
-                              
-
+                              text: hotel,
+                              style: TextStyle(fontWeight: FontWeight.w700),
                             ),
                           ],
-                          
                         ),
                       ),
                     ),
                     SizedBox(height: containerPadding)
-
                   ],
                 ),
               ),
             ],
           ),
-           
         ),
-      ], 
-      
+      ],
     );
   }
 }
 
 class FirstHalf extends StatelessWidget {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(35, 35, 0, 0),
       child: Column(
         children: <Widget>[
-
           CustomAppBar(),
           SizedBox(
             height: 30,
@@ -239,82 +194,56 @@ class FirstHalf extends StatelessWidget {
           searchBar(),
           SizedBox(height: 30),
           categories(),
-
-
-
-
         ],
       ),
-      
     );
   }
 }
 
-Widget title(){
+Widget title() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[
-
       SizedBox(width: 35),
       Column(
-        
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Me", 
-            style: TextStyle(
-              fontSize: 30, 
-              fontWeight: FontWeight.w700),
+            "Me",
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),
           ),
-
           Text(
-            "Dispache", 
-            style: TextStyle(
-              fontSize: 30, 
-              fontWeight: FontWeight.w200),
+            "Dispache",
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w200),
           ),
-
         ],
-      
-      
       ),
     ],
-
   );
-
 }
 
-Widget searchBar(){
+Widget searchBar() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
-      Icon(
-        Icons.search, 
-        color: Colors.black
-        ),
-
-        SizedBox(width: 20),
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "Search",
-              contentPadding: EdgeInsets.symmetric(vertical: 10),
-              hintStyle: TextStyle(
-                color: Colors.black
-              ),
-            ),
+      Icon(Icons.search, color: Colors.black),
+      SizedBox(width: 20),
+      Expanded(
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: "Search",
+            contentPadding: EdgeInsets.symmetric(vertical: 10),
+            hintStyle: TextStyle(color: Colors.black),
           ),
-        )
-
-      
+        ),
+      )
     ],
-
   );
 }
 
-Widget categories(){
+Widget categories() {
   return Container(
-    height: 185, 
+    height: 185,
     child: ListView(
       scrollDirection: Axis.horizontal,
       children: <Widget>[
@@ -324,22 +253,19 @@ Widget categories(){
           avaliability: 12,
           selected: true,
         ),
-
-           CategoryListItem(
+        CategoryListItem(
           categoryIcon: Icons.local_pizza,
           categoryName: "Pizza",
           avaliability: 12,
           selected: false,
         ),
-
-          CategoryListItem(
+        CategoryListItem(
           categoryIcon: Icons.restaurant,
           categoryName: "Pirão",
           avaliability: 12,
           selected: false,
         ),
-
-          CategoryListItem(
+        CategoryListItem(
           categoryIcon: Icons.fastfood,
           categoryName: "Hot Dog",
           avaliability: 12,
@@ -347,13 +273,11 @@ Widget categories(){
         ),
       ],
     ),
-
   );
 }
 
 class CustomAppBar extends StatelessWidget {
-
-    final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+  final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -367,83 +291,66 @@ class CustomAppBar extends StatelessWidget {
             builder: (context, snapshot) {
               List<FoodItem> foodItems = snapshot.data;
 
-              int length = foodItems!=null ? foodItems.length : 0;
+              int length = foodItems != null ? foodItems.length : 0;
 
               return buildGestureDetector(length, context, foodItems);
-
             },
-
           ),
-         
         ],
       ),
-      
     );
   }
+
   GestureDetector buildGestureDetector(
-    int length, BuildContext context, List<FoodItem> foodItem){
-      return GestureDetector(
-        onTap: (){
-          if(length > 0){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> Cart()));
-          } else {
-            return;
-          }
-
-
-        },
-
-        child: Container(
-          margin: EdgeInsets.only(right: 30),
-          child: Text(length.toString()),
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            color: Colors.yellow[800], borderRadius: BorderRadius.circular(50)
-          ),
-        ),
-      );
-
+      int length, BuildContext context, List<FoodItem> foodItem) {
+    return GestureDetector(
+      onTap: () {
+        if (length > 0) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Cart()));
+        } else {
+          return;
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.only(right: 30),
+        child: Text(length.toString()),
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+            color: Colors.yellow[800], borderRadius: BorderRadius.circular(50)),
+      ),
+    );
   }
 }
 
-
 class CategoryListItem extends StatelessWidget {
-
   final IconData categoryIcon;
   final String categoryName;
   final int avaliability;
   final bool selected;
 
-  CategoryListItem({
-       @required this.categoryIcon,
-       @required this.categoryName,
-       @required this.avaliability,
-       @required this.selected
-
-  });
+  CategoryListItem(
+      {@required this.categoryIcon,
+      @required this.categoryName,
+      @required this.avaliability,
+      @required this.selected});
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 20),
       padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
-
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50),
-        color: selected ? Color(0xfffeb324) : Colors.white,
-        border: Border.all(
-          color: selected ? Colors.transparent : Colors.grey,
-          width: 1.5
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey[100],
-            blurRadius: 15,
-            offset: Offset(25,0),
-            spreadRadius: 5
-          ),
-        ]
-      ),
-
+          borderRadius: BorderRadius.circular(50),
+          color: selected ? Color(0xfffeb324) : Colors.white,
+          border: Border.all(
+              color: selected ? Colors.transparent : Colors.grey, width: 1.5),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey[100],
+                blurRadius: 15,
+                offset: Offset(25, 0),
+                spreadRadius: 5),
+          ]),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
@@ -453,25 +360,19 @@ class CategoryListItem extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: selected? Colors.transparent : Colors.grey,
-                width: 1.5
-              ) ,
-             ),
-             child: Icon(
-               categoryIcon, 
-               color: Colors.black, 
-               size: 30,
-               ),
-
-
+                  color: selected ? Colors.transparent : Colors.grey,
+                  width: 1.5),
+            ),
+            child: Icon(
+              categoryIcon,
+              color: Colors.black,
+              size: 30,
+            ),
           ),
           SizedBox(height: 10),
           Text(
             categoryName,
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: Colors.black
-            ),
+            style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black),
           ),
           Container(
             margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
@@ -488,8 +389,6 @@ class CategoryListItem extends StatelessWidget {
           )
         ],
       ),
-
-      
     );
   }
 }

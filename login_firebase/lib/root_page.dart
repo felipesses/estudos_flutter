@@ -3,9 +3,7 @@ import 'login_page.dart';
 import 'auth.dart';
 import 'home_page.dart';
 
-
 class RootPage extends StatefulWidget {
-
   RootPage(this.auth);
 
   final BaseAuth auth;
@@ -14,15 +12,9 @@ class RootPage extends StatefulWidget {
   _RootPageState createState() => _RootPageState();
 }
 
-enum AuthStatus{
-  notSignedIn, 
-  signedIn
-}
-
+enum AuthStatus { notSignedIn, signedIn }
 
 class _RootPageState extends State<RootPage> {
-  
-
   AuthStatus _authStatus = AuthStatus.notSignedIn;
 
   initState() {
@@ -33,58 +25,40 @@ class _RootPageState extends State<RootPage> {
     // current state
 
     widget.auth.currentUser().then((userId) {
-
-     setState(() {
-      
-       _authStatus = userId == null ? AuthStatus.notSignedIn : AuthStatus.signedIn;
-
-     });
-
-
-  });
-
+      setState(() {
+        _authStatus =
+            userId == null ? AuthStatus.notSignedIn : AuthStatus.signedIn;
+      });
+    });
   }
-   
 
-
-  void _signedIn(){
+  void _signedIn() {
     setState(() {
       _authStatus = AuthStatus.signedIn;
     });
   }
 
-  void _signedOut(){
+  void _signedOut() {
     setState(() {
-     _authStatus = AuthStatus.notSignedIn; 
+      _authStatus = AuthStatus.notSignedIn;
     });
   }
-  
-  
+
   @override
   Widget build(BuildContext context) {
-    
     switch (_authStatus) {
-      case AuthStatus.notSignedIn :
-    return new LoginPage(
-      
-       auth: widget.auth,
-       onSignedIn: _signedIn,
-    
-       ) ;
-    // se não estiver logado, redireciona para a pagina de login
+      case AuthStatus.notSignedIn:
+        return new LoginPage(
+          auth: widget.auth,
+          onSignedIn: _signedIn,
+        );
+      // se não estiver logado, redireciona para a pagina de login
 
-    case AuthStatus.signedIn :
-
-    return new HomePage(
-
-      auth: widget.auth,
-      onSignedOut: _signedOut,
-
-
-    );
+      case AuthStatus.signedIn:
+        return new HomePage(
+          auth: widget.auth,
+          onSignedOut: _signedOut,
+        );
     }
-    
-
-    
   }
 }

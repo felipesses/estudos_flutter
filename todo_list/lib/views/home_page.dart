@@ -26,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // lista de tarefas 
+  // lista de tarefas
 
   Widget _buildTaskList() {
     if (_taskList.isEmpty) {
@@ -47,7 +46,6 @@ class _HomePageState extends State<HomePage> {
     } else {
       return ListView.separated(
         separatorBuilder: (context, index) => Divider(color: Colors.black),
-        
         itemBuilder: _buildTaskItemSlidable,
         itemCount: _taskList.length,
       );

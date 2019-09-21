@@ -4,12 +4,8 @@ import './secondPage.dart' as second;
 import './thirdPage.dart' as third;
 
 void main() {
-  runApp(new MaterialApp(
-  home: new MyTab()
-  ));
+  runApp(new MaterialApp(home: new MyTab()));
 }
-
-
 
 class MyTab extends StatefulWidget {
   @override
@@ -17,13 +13,8 @@ class MyTab extends StatefulWidget {
 }
 
 class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
-
-
-
-
 // controller para tab bar
   TabController controller;
-
 
   @override
   void initState() {
@@ -47,8 +38,6 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
             // adicionando tab bar
 
             controller: controller,
-
-            
             tabs: <Tab>[
               new Tab(text: "Principal"),
               new Tab(text: "Pizza"),
