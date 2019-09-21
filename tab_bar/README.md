@@ -1,3 +1,3 @@
 # tab_bar
 
-Projeto simples em Flutter com uso do TabBar
+Projeto simples em Flutter com uso do TabBar.
