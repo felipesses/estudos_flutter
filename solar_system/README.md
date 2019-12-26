@@ -1,4 +1,4 @@
-# planets_app
+# solar_system
 
 A new Flutter project.
 
